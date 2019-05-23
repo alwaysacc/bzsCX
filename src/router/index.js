@@ -33,7 +33,7 @@ import Layout from '@/layout'
 export const constantRoutes = [
   {
     path: '/login',
-    component: () => import('@/views/login/index'),
+    component: () => import('@/views/login/login'),
     hidden: true
   },
 
@@ -43,7 +43,7 @@ export const constantRoutes = [
     hidden: true
   },
 
-  {
+  /*  {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
@@ -53,44 +53,154 @@ export const constantRoutes = [
       component: () => import('@/views/dashboard/index'),
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
-  },
-
+  },*/
   {
-    path: '/example',
+    path: '/',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
+    redirect: '/user',
+    name: '',
+    hidden: true,
+    meta: { title: '', icon: 'user' }
+  },
+  {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/addQuote',
+    name: '客户',
+    meta: { title: '客户', icon: 'user' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        path: 'addQuote',
+        name: '新增报价',
+        component: () => import('@/views/user/addQuote'),
+        meta: { title: '新增报价' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        path: 'addQuote2',
+        name: '完善行驶证信息',
+        hidden: true,
+        component: () => import('@/views/user/addQuote2'),
+        meta: { title: '完善行驶证信息' }
+      },
+      {
+        path: 'selectInsurance',
+        name: '选择险种',
+        hidden: true,
+        component: () => import('@/views/user/selectInsurance'),
+        meta: { title: '选择险种' }
+      },
+      {
+        path: 'submitQuote',
+        name: '精准比价',
+        hidden: true,
+        component: () => import('@/views/user/submitQuote'),
+        meta: { title: '精准比价' }
+      },
+      {
+        path: 'updateCar',
+        name: '完善行驶证信息',
+        hidden: true,
+        component: () => import('@/views/user/updateCar'),
+        meta: { title: '完善行驶证信息' }
+      },
+      {
+        path: 'userList',
+        name: '客户列表',
+        component: () => import('@/views/user/userList'),
+        meta: { title: '客户列表' }
+      },
+      {
+        path: 'batchRenewal',
+        name: '批量续保',
+        hidden: true,
+        component: () => import('@/views/user/batchRenewal'),
+        meta: { title: '批量续保' }
+      },
+      {
+        path: 'orderList',
+        name: '订单列表',
+        component: () => import('@/views/user/orderList'),
+        meta: { title: '订单列表' }
+      },
+      {
+        path: 'orderDetail',
+        name: '订单详情',
+        hidden: true,
+        component: () => import('@/views/user/orderDetail'),
+        meta: { title: '订单详情' }
+      },
+      {
+        path: 'warranty',
+        name: '已出保单',
+        component: () => import('@/views/user/warranty'),
+        meta: { title: '已出保单' }
+      },
+      {
+        path: 'defeatedList',
+        name: '战败列表',
+        hidden: true,
+        component: () => import('@/views/user/defeatedList'),
+        meta: { title: '战败列表' }
+      },
+      {
+        path: 'retrieveList',
+        name: '回收站',
+        component: () => import('@/views/user/retrieveList'),
+        meta: { title: '回收站' }
+      },
+      {
+        path: 'userDetail',
+        name: '客户详情',
+        hidden: true,
+        component: () => import('@/views/user/userDetail'),
+        meta: { title: '客户详情' }
+      },
+      {
+        path: 'createOrder',
+        name: '完善订单',
+        hidden: true,
+        component: () => import('@/views/user/createOrder'),
+        meta: { title: '完善订单' }
+      },
+      {
+        path: 'insuranceInfo',
+        name: '投保详情',
+        hidden: true,
+        component: () => import('@/views/user/insuranceInfo'),
+        meta: { title: '投保详情' }
       }
     ]
   },
 
   {
-    path: '/form',
+    path: '/organ',
     component: Layout,
+    redirect: '/organ/roleManage',
+    name: '组织',
+    meta: { title: '组织', icon: 'tree' },
     children: [
       {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        path: 'roleManage',
+        name: '角色管理',
+        component: () => import('@/views/organization/roleManage'),
+        meta: { title: '角色管理' }
+      },
+      {
+        path: 'salesmanList',
+        name: '业务员列表',
+        component: () => import('@/views/organization/salesmanList'),
+        meta: { title: '业务员列表' }
+      },
+      {
+        path: 'salesmanRegister',
+        name: '业务员注册',
+        component: () => import('@/views/organization/salesmanRegister'),
+        meta: { title: '业务员注册' }
       }
     ]
   },
 
-  {
+  /*  {
     path: '/nested',
     component: Layout,
     redirect: '/nested/menu1',
@@ -146,9 +256,9 @@ export const constantRoutes = [
         meta: { title: 'menu2' }
       }
     ]
-  },
+  },*/
 
-  {
+  /*  {
     path: 'external-link',
     component: Layout,
     children: [
@@ -157,7 +267,7 @@ export const constantRoutes = [
         meta: { title: 'External Link', icon: 'link' }
       }
     ]
-  },
+  },*/
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

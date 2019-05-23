@@ -5,10 +5,15 @@ import { resetRouter } from '@/router'
 const state = {
   token: getToken(),
   name: '',
-  avatar: ''
+  avatar: '',
+  user: '' || localStorage.getItem('user')
 }
 
 const mutations = {
+  SET_USER: (state, token) => {
+    state.user = token
+    localStorage.setItem('user', token)
+  },
   SET_TOKEN: (state, token) => {
     state.token = token
   },
@@ -21,19 +26,24 @@ const mutations = {
 }
 
 const actions = {
+  setUser({ commit }, user) {
+    commit('SET_USER', user)
+  },
   // user login
   login({ commit }, userInfo) {
-    const { username, password } = userInfo
+    commit('SET_TOKEN', 'admin-token')
+    setToken('admin-token')
+    /* const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
+        console.log(response)
+
         resolve()
       }).catch(error => {
         reject(error)
       })
-    })
+    })*/
   },
 
   // get user info
@@ -64,6 +74,7 @@ const actions = {
         commit('SET_TOKEN', '')
         removeToken()
         resetRouter()
+        localStorage.clear()
         resolve()
       }).catch(error => {
         reject(error)
