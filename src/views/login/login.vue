@@ -8,7 +8,7 @@
       <el-form-item prop="password">
         <el-input v-model="ruleForm.password" type="password" auto-complete="off" placeholder="密码" />
       </el-form-item>
-     <!-- <el-row>
+      <!-- <el-row>
         <el-col :span="12">
           <el-form-item prop="code">
             <el-input v-model="ruleForm.code" type="text" auto-complete="off" placeholder="图形验证码" @keyup.enter.native="submitForm('ruleForm')" />
@@ -26,7 +26,7 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-import { login,getcode } from '../../api/userApi'
+import { login } from '../../api/userApi'
 export default {
   name: 'Login',
   data() {
@@ -76,7 +76,7 @@ export default {
   // 创建完毕状态(里面是操作)
   created() {
     // 获取图形验证码
-   /* getcode().then(res => {
+    /* getcode().then(res => {
       console.log(res)
       this.ruleForm.codeimg=res
     })
@@ -86,35 +86,37 @@ export default {
   // 里面的函数只有调用才会执行
   methods: {
     handleLogin() {
-      this.logining = true
-      const params = this.ruleForm
-      login(params).then(res => {
-        console.log(res)
-        if (res.code == 200) {
-          setTimeout(() => {
-            setTimeout(() => {
-              this.$store.dispatch('user/setUser', JSON.stringify(res.data.user))
-              this.$store.dispatch('user/login', this.ruleForm).then(() => {
-                this.$router.push({ path: this.redirect || '/user' })
-                this.logining = false
-              }).catch(() => {
-                this.logining = false
+      this.$refs.ruleForm.validate(valid => {
+        if (valid) {
+          this.logining = true
+          const params = this.ruleForm
+          login(params).then(res => {
+            console.log(res)
+            if (res.code == 200) {
+              setTimeout(() => {
+                setTimeout(() => {
+                  this.$store.dispatch('user/setUser', JSON.stringify(res.data.user))
+                  this.$store.dispatch('user/login', this.ruleForm).then(() => {
+                    this.$router.push({ path: this.redirect || '/user' })
+                    this.logining = false
+                  }).catch(() => {
+                    this.logining = false
+                  })
+                }, 1000)
+                this.$message({
+                  type: 'success',
+                  message: '登录成功'
+                })
+              }, 1000)
+            } else {
+              this.loading = false
+              this.$message({
+                type: 'error',
+                message: res.message
               })
-            }, 1000)
-            this.$message({
-              type: 'success',
-              message: '登录成功'
-            })
-          }, 1000)
-        } else {
-          this.loading = false
-          this.$message({
-            type: 'error',
-            message: res.message
+            }
           })
-        }
-      })
-      /* this.$refs.loginForm.validate(valid => {
+          /* this.$refs.loginForm.validate(valid => {
         if (valid) {
 
         } else {
@@ -122,6 +124,8 @@ export default {
           return false
         }
       })*/
+        }
+      })
     }
 
   }

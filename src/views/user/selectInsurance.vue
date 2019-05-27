@@ -820,7 +820,7 @@ export default {
             this.MB = true
           }
         } else if (num == num3) {
-          this.G1.insuredAmount = arr[i].amount
+          this.G1.insuredAmount = 'Y'
           if (arr[i].bujimianpei != '' && arr[i].bujimianpei != null) {
             this.MG1 = true
           }
@@ -837,7 +837,7 @@ export default {
         } else if (num == num6) {
           this.Q3.insuredAmount = arr[i].amount
         } else if (num == num7) {
-          this.Z.insuredAmount = arr[i].amount
+          this.Z.insuredAmount = 'Y'
           if (arr[i].bujimianpei != '' && arr[i].bujimianpei != null) {
             this.MZ = true
           }
@@ -849,7 +849,7 @@ export default {
             this.ML = true
           }
         } else if (num == num10) {
-          this.X1.insuredAmount = arr[i].amount
+          this.X1.insuredAmount = 'Y'
           if (arr[i].bujimianpei != '' && arr[i].bujimianpei != null) {
             this.X1.insuredAmount='Y'
             this.MX1 = true
@@ -860,11 +860,10 @@ export default {
             this.MR = true
           }
         } else if (num == num12) {
-          this.Z2.insuredAmount = arr[i].amount
+          this.Z2.insuredAmount ='Y'
         } else if (num == num13) {
-          this.Z3.insuredAmount = arr[i].amount
+          this.Z3.insuredAmount = 'Y'
         }
-
         /* switch (st){
             case 'A':
                 this.A.insuranceName=arr[i].insuranceName

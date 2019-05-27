@@ -254,7 +254,7 @@
                 label="车主"
               />
               <el-table-column
-                prop="brand_model"
+                prop="car_model"
                 label="品牌型号"
                 min-width="200"
               />
@@ -264,12 +264,12 @@
                 width="100"
               />
               <el-table-column
-                prop="busunes_expire_date"
+                prop="next_busines_start_date"
                 label="商业险到期时间"
                 width="100"
               />
               <el-table-column
-                prop="force_expire_date"
+                prop="next_force_start_date"
                 label="交强险到期时间"
                 width="100"
               />
@@ -300,7 +300,7 @@
                 label="计划回访时间"
               />
               <el-table-column
-                prop="choice_last_year_insurance_name"
+                prop="last_year_insurance_company"
                 label="上年投保公司"
               />
               <el-table-column
