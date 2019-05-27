@@ -64,4 +64,3 @@ const responseFake = (url, type, respond) => {
 export default mocks.map(route => {
   return responseFake(route.url, route.type, route.response)
 })
-
