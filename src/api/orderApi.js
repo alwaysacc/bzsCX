@@ -12,3 +12,8 @@ export const searchOrderList = (params) => {
 export const getOrderDetails = (params) => {
   return http.fetchPost('/orderinfo/getOrderDetail', params)
 }
+
+export const payCancel = (params) => {
+  return http.fetchPost('/quoteinfo/payCancel', params)
+}
+

@@ -442,7 +442,8 @@ export default {
       carNumber: '',
       postedName: '',
       deliveryWay: '',
-      insuranceCompany: ''
+      insuranceCompany: '',
+      payStatus:'',
     }
   },
   filters: {
@@ -465,7 +466,7 @@ export default {
   watch: {
     $route(to, from) {
       if (to.path == '/orderList') {
-        this.payStatus = 0
+        this.payStatus = 9
         this.activeName = '0'
         this.orderList()
       }

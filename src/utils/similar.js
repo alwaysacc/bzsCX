@@ -29,6 +29,22 @@ export function similar(str1, str2) {
   // var similarity = 1 - dif[len1][len2] / Math.max(str1.length, str2.length);
   return 1 - dif[len1][len2] / Math.max(len1, len2)
 }
+export function formatDate(value) {
+  const date = new Date(value)
+  const y = date.getFullYear()
+  let MM = date.getMonth() + 1
+  MM = MM < 10 ? ('0' + MM) : MM
+  let d = date.getDate()
+  d = d < 10 ? ('0' + d) : d
+  let h = date.getHours()
+  h = h < 10 ? ('0' + h) : h
+  let m = date.getMinutes()
+  m = m < 10 ? ('0' + m) : m
+  let s = date.getSeconds()
+  s = s < 10 ? ('0' + s) : s
+  return y + '-' + MM + '-' + d + ' '
+}
 export default {
-  similar
+  similar,
+  formatDate
 }

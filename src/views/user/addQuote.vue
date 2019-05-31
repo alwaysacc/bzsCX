@@ -111,7 +111,7 @@ export default {
   },
   methods: {
     aaa(e) {
-      if (e.name == 'second') {
+      if (e.name === 'second') {
         this.checkType = 1
       } else {
         this.checkType = 0
@@ -126,7 +126,7 @@ export default {
             })
             return false
           }
-          if (this.lastYearSource == '2') {
+          if (this.lastYearSource === '2') {
             if (this.idCard.length < 6) {
               this.$alert('平安续保请输入车主证件后六位', '提示', {
                 confirmButtonText: '确定'
@@ -162,20 +162,124 @@ export default {
         insuredArea: this.insuredArea,
         createBy: user.accountId
       }
-      checkByCarNoOrVinNo(params).then(res => {
-        console.log(res)
-        this.loading = false
-        loading.close()
-        if (res.code === 200) {
-          this.$router.push({ path: '/user/selectInsurance', query: { insurance: JSON.stringify(res.data) }})
-        } else {
-          this.$message({
-            type: 'error',
-            message: res.message
-          })
-          this.$router.push({ path: '/user/addQuote2', query: { carNo: this.before + this.carNo }})
-        }
-      })
+      let a = 0
+      if (this.lastYearSource === '') {
+        params.lastYearSource = 4
+        checkByCarNoOrVinNo(params).then(res => {
+          a = a + 1
+          console.log(res)
+          if (res.code === 200) {
+            a = 5
+            loading.close()
+            this.$router.push({ path: '/user/selectInsurance', query: { insurance: JSON.stringify(res.data) }})
+          } else {
+            if (a === 3) {
+              loading.close()
+              this.$message({
+                type: 'error',
+                message: '未获取到续保信息'
+              })
+            }
+          }
+        })
+        params.lastYearSource = 2
+        checkByCarNoOrVinNo(params).then(res => {
+          a = a + 1
+          console.log(res)
+          if (res.code === 200) {
+            a = 5
+            loading.close()
+            this.$router.push({ path: '/user/selectInsurance', query: { insurance: JSON.stringify(res.data) }})
+          } else {
+            if (a === 3) {
+              loading.close()
+              this.$message({
+                type: 'error',
+                message: '未获取到续保信息'
+              })
+            }
+          }
+          /* else if(res.code===300){
+            this.$message({
+              type: 'error',
+              message: res.message
+            })
+          } else {
+            this.$message({
+              type: 'error',
+              message: res.message
+            })
+            this.$router.push({ path: '/user/addQuote2', query: { carNo: this.before + this.carNo }})
+          }*/
+        })
+        params.lastYearSource = 1
+        checkByCarNoOrVinNo(params).then(res => {
+          a = a + 1
+          console.log(res)
+          if (res.code === 200) {
+            a = 5
+            loading.close()
+            this.$router.push({ path: '/user/selectInsurance', query: { insurance: JSON.stringify(res.data) }})
+          } else {
+            if (a === 3) {
+              loading.close()
+              this.$message({
+                type: 'error',
+                message: '未获取到续保信息'
+              })
+            }
+          }
+        })
+      } else {
+        checkByCarNoOrVinNo(params).then(res => {
+          this.loading = false
+          loading.close()
+          if (res.code === 200) {
+            this.$router.push({ path: '/user/selectInsurance', query: { insurance: JSON.stringify(res.data) }})
+          } else {
+            this.$message({
+              type: 'error',
+              message: '获取续保信息失败'
+            })
+          }
+          /* else {
+            this.$message({
+              type: 'error',
+              message: res.message
+            })
+            this.$router.push({ path: '/user/addQuote2', query: { carNo: this.before + this.carNo }})
+          }*/
+        })
+      }
+      // const params = {
+      //   checkType: this.checkType,
+      //   carNo: this.before + this.carNo,
+      //   idCard: this.idCard,
+      //   vinNo: this.vinNo,
+      //   engineNo: this.engineNo,
+      //   lastYearSource: this.lastYearSource,
+      //   insuredArea: this.insuredArea,
+      //   createBy: user.accountId
+      // }
+      // checkByCarNoOrVinNo(params).then(res => {
+      //   console.log(res)
+      //   this.loading = false
+      //   loading.close()
+      //   if (res.code === 200) {
+      //     this.$router.push({ path: '/user/selectInsurance', query: { insurance: JSON.stringify(res.data) }})
+      //   } else if(res.code===300){
+      //     this.$message({
+      //       type: 'error',
+      //       message: res.message
+      //     })
+      //   } else {
+      //     this.$message({
+      //       type: 'error',
+      //       message: res.message
+      //     })
+      //     this.$router.push({ path: '/user/addQuote2', query: { carNo: this.before + this.carNo }})
+      //   }
+      // })
     },
     toUpdate() {
       this.$router.push('/user/addQuote2')

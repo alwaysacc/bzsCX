@@ -282,8 +282,10 @@ export default {
       console.log(row)
       if (row.account_state == '0') {
         return '可用'
-      } else {
+      } else if(row.account_state == '1'){
         return '不可用'
+      }else{
+        return '待审核'
       }
     }
   }

@@ -32,7 +32,7 @@
         </el-col>
         <el-col span="2" class="p-col">
           <p>保单原价</p>
-          <p>￥{{ map.quoteInfo.bizPremiumByDis+map.quoteInfo.forceTotal + map.quoteInfo.taxTotal }}</p>
+          <p>￥{{ price }}</p>
         </el-col>
         <el-col span="2" class="p-col">
           <p>商业险优惠</p>
@@ -76,37 +76,36 @@
         <el-col span="7" style="text-align: left">
           <p style="color: red">请于{{ this.map.orderInfo.createTime | formatDate }}之前扫码支付</p>
           <el-row class="line-row">
-            <el-col span="5">支付方式：</el-col>
+            <el-col span="6">支付方式：</el-col>
             <el-col span="10">微信支付</el-col>
           </el-row>
           <el-row class="line-row">
-            <el-col span="5">车牌号：</el-col>
+            <el-col span="6">车牌号：</el-col>
             <el-col span="10">{{ map.carInfo.carNumber }}</el-col>
           </el-row>
           <el-row class="line-row">
-            <el-col span="5">金额：</el-col>
-            <el-col span="10">{{ map.quoteInfo.bizPremiumByDis+map.quoteInfo.forceTotal + map.quoteInfo.taxTotal }}元</el-col>
+            <el-col span="6">金额：</el-col>
+            <el-col span="10">{{ price }}元</el-col>
           </el-row>
           <el-row class="line-row">
-            <el-col span="5">姓名：</el-col>
+            <el-col span="6">姓名：</el-col>
             <el-col span="10">{{ map.carInfo.licenseOwner }}</el-col>
           </el-row>
           <el-row class="line-row">
-            <el-col span="5">缴费单号：</el-col>
+            <el-col span="6">缴费单号：</el-col>
             <el-col span="10">{{ map.quoteInfo.paymentNotice }}</el-col>
           </el-row>
         </el-col>
       </el-row>
     </div>
     <div class="bot">
-      <el-button type="primary">取消订单</el-button>  <el-button type="primary">确认支付</el-button>
+      <el-button type="primary" @click="payCancel">取消订单</el-button>  <el-button type="primary">确认支付</el-button>
     </div>
   </div>
 </template>
-
 <script>
 import qrcode from 'vue_qrcodes'
-import { getOrderDetails } from '../../api/orderApi'
+import { getOrderDetails, payCancel } from '../../api/orderApi'
 import zkTimeDown from '../../components/countdown'
 export default {
   name: '',
@@ -141,13 +140,40 @@ export default {
       msg: '',
       endTime: '',
       startTime: '',
-      show: false
+      show: false,
+      price: ''
     }
   },
   created() {
     this.orderDetails()
   },
   methods: {
+    payCancel() {
+      const loading = this.$loading({
+        lock: true,
+        text: '拼命加载中',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
+      const user = JSON.parse(this.$store.getters.user)
+      const params = {
+        proposalNo: this.map.quoteInfo.proposalNo,
+        createdBy: user.accountId,
+        quoteId: this.map.quoteInfo.quoteId,
+        source: this.map.quoteInfo.quoteSource,
+        orderId: this.map.orderInfo.orderId
+      }
+      payCancel(params).then(res => {
+        loading.close()
+        if (res.code === 200) {
+          this.$message({
+            type: 'error',
+            message: '取消成功'
+          })
+        }
+        console.log(res)
+      })
+    },
     toInsuranceInfo() {
       this.$router.push({ path: '/user/insuranceInfo', query: { map: JSON.stringify(this.map) }})
     },
@@ -175,6 +201,7 @@ export default {
       })
     },
     set() {
+      this.price = (this.map.quoteInfo.bizPremiumByDis + this.map.quoteInfo.forceTotal + this.map.quoteInfo.taxTotal).toFixed(2)
       /*      this.startTime=this.map.orderInfo.createTime
       this.endTime=this.startTime+86400*10
       console.log(this.startTime,this.endTime)

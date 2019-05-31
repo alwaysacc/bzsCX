@@ -1010,9 +1010,7 @@
             </el-col>
             <el-col span="12">
               <div class="right-dia-div">
-                <el-row class="line-row-dialog">
-
-                </el-row>
+                <el-row class="line-row-dialog" />
                 <el-row class="line-row-dialog">
                   <el-col span="5">
                     <el-radio v-model="radio" label="1">商业险：</el-radio>
@@ -1665,22 +1663,21 @@ export default {
             this.map.customer = this.customer
           }
 
-          const list=res.data.insuredList
-          for (let i = 0; i <list.length ; i++) {
+          const list = res.data.insuredList
+          for (let i = 0; i < list.length; i++) {
             if (list[i].insurance_amount == 0) {
               this.map.insuredList[i].insurance_amount = '投保'
             }
-
-            if (list[i].excluding_deductible != null) {
+            if (list[i].excluding_deductible != '0.00') {
               list[i].insurance_name = list[i].insurance_name + '(不计免赔)'
-             /* let insu = list[i]
+              /* let insu = list[i]
               list[i].insurance_name = insu.insurance_name + '(不计免赔)'
               list[i].insurance_amount = '投保'
               list[i].insurance_premium = insu.excluding_deductible
               list[i].excluding_deductible = null*/
             }
           }
-       /*   console.log(list)
+          /*   console.log(list)
           console.log( res.data.insuredList)
           console.log( this.insuredList)
           this.insuredList=this.insuredList.concat(list)*/
@@ -1756,27 +1753,20 @@ export default {
       /*   if (this.Rquote!=null && this.Tquote!=null || this.Pquote!=null) {
 
       }*/
-      console.log()
-      console.log(this.quoteMap.quote)
-      if (this.quoteMap.quote){
-      if (this.quoteMap.quoteStatus==0) {
-        this.$alert('暂无报价，无法投保，请重新报价', '提示', {
-          confirmButtonText: '确定'
-        })
-        return  false
-      }
-      if (this.quoteMap.quoteStatus == 0) {
-        this.$alert('报价失败，无法投保，请重新报价', '提示', {
-          confirmButtonText: '确定'
-        })
-        return false
-      } else if (this.quoteMap.submitStatus == 0) {
-        this.$alert('核保失败，无法投保，请重新核保', '提示', {
-          confirmButtonText: '确定'
-        })
-        return false
-      }
-      }else{
+      console.log(this.quoteMap.quote,1)
+      if (this.quoteMap.quote) {
+        if (this.quoteMap.quote.quoteStatus == 0) {
+          this.$alert('报价失败，无法投保，请重新报价', '提示', {
+            confirmButtonText: '确定'
+          })
+          return false
+        } else if (this.quoteMap.quote.submitStatus == 0) {
+          this.$alert('核保失败，无法投保，请重新核保', '提示', {
+            confirmButtonText: '确定'
+          })
+          return false
+        }
+      } else {
         this.$alert('暂未报价，无法投保，请重新报价', '提示', {
           confirmButtonText: '确定'
         })

@@ -293,7 +293,7 @@
 
         <span slot="footer" class="dialog-footer">
           <el-button @click="toOrderDetail">查看订单详情</el-button>
-          <el-button type="primary" @click="tpy = false">确 定</el-button>
+<!--          <el-button type="primary" @click="tpy = false">确 定</el-button>-->
         </span>
       </el-dialog>
       <el-dialog
@@ -380,7 +380,6 @@
                 交费通知单号：{{ info.checkNo }}
               </el-row>
               <el-row style="color: red;margin-top: 1em">
-
                 *温馨提示：请于2019年4月28日09:00:42前，使用微信扫一扫通过微信公众号进行支付！
               </el-row>
             </el-col>
@@ -389,18 +388,17 @@
 
         <span slot="footer" class="dialog-footer">
             <el-button @click="toOrderDetail">查看订单详情</el-button>
-          <el-button type="primary" @click="renbao = false">确 定</el-button>
         </span>
       </el-dialog>
       <el-dialog
-        top="5vh"
+        top="2vh"
         title="提示信息"
         append-to-body="true"
         :visible.sync="pa"
         width="60%"
         :before-close="handleClose"
       >
-        <div>
+        <div style="height: auto">
           <a>您得支付信息如下：</a>
           <el-row style="border: #dfe6ec 1px solid;">
             <el-col span="20">
@@ -429,7 +427,7 @@
                   {{ map.carInfo.licenseOwner }}
                 </el-col>
                 <el-col span="6">
-                  {{ info.payNo }}&nbsp;
+                  {{ info.paymentNotice }}&nbsp;
                 </el-col>
                 <el-col span="6">
                   RMB
@@ -449,21 +447,25 @@
             </el-col>
             <el-col span="4" style="text-align: center;margin-top: 1em">
               <qrcode
+                v-if="showImg"
                 :url="url"
                 iconurl="http://bao.91bihu.com/resources/images/quote/pa.png"
                 wid="90"
                 hei="90"
-                imgwid="30"
-                imghei="30"
+                imgwid="120"
+                imghei="120"
               />
+              <img v-if="!showImg" style="width: 120px" :src="url">
             </el-col>
           </el-row>
           <el-tabs v-model="activeName2" style="margin-top: 1em" active-text-color="#f8f8f8" type="card" @tab-click="handleClick">
             <el-tab-pane label="选择支付方式：" disabled />
             <el-tab-pane label="自助缴费" name="first">
-              <div style="text-align: center;height: 2em">
+              <div style="text-align: center;height: auto">
+
                 <el-row style="margin-top: 1em;font-size: 20px">
-                  <!--                  <input type="checkbox" name="like" value="0">-->
+
+                 <!--                  <input type="checkbox" name="like" value="0">-->
                   扫描上方二维码支付
                 </el-row>
                 <!--                <el-button style="background-color: #fa7a1f; color: black">打印缴费通知单</el-button>-->
@@ -476,7 +478,6 @@
 
         <span slot="footer" class="dialog-footer">
            <el-button @click="toOrderDetail">查看订单详情</el-button>
-          <el-button type="primary" @click="pa = false">确 定</el-button>
         </span>
       </el-dialog>
     </div>
@@ -530,8 +531,9 @@ export default {
     onSubmit() {
       const loading = this.$loading({
         lock: true,
-        text: 'Loading',
-        spinner: 'el-icon-loading'
+        text: '拼命加载中',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
       })
       const user = JSON.parse(this.$store.getters.user)
       const params = {

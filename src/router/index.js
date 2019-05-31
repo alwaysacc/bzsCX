@@ -199,7 +199,39 @@ export const constantRoutes = [
       }
     ]
   },
-
+  {
+    path: '/account',
+    component: Layout,
+    redirect: '/account/oneEntry',
+    name: '台账',
+    meta: { title: '台账', icon: 'taizhang' },
+    children: [
+      {
+        path: 'oneEntry',
+        name: '单个录入',
+        component: () => import('@/views/account/oneEntry'),
+        meta: { title: '单个录入' }
+      },
+      {
+        path: 'oneEntry',
+        name: '批量抓单',
+        component: () => import('@/views/account/oneEntry'),
+        meta: { title: '批量抓单' }
+      },
+      {
+        path: 'oneEntry',
+        name: '台账列表',
+        component: () => import('@/views/account/oneEntry'),
+        meta: { title: '台账列表' }
+      },
+      {
+        path: 'oneEntry',
+        name: '批改车牌',
+        component: () => import('@/views/account/oneEntry'),
+        meta: { title: '批改车牌' }
+      }
+    ]
+  },
   /*  {
     path: '/nested',
     component: Layout,

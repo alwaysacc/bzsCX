@@ -534,7 +534,7 @@
 </template>
 
 <script>
-import { similar } from '../../utils/similar'
+import { similar, formatDate } from '../../utils/similar'
 // import { getStore } from '../../config/mUtils'
 
 export default {
@@ -733,9 +733,6 @@ export default {
           if (m == '1') { this.F.flag = '1' }
           break
       }
-
-      console.log(e)
-      console.log(m)
     },
     setRelationship() {
     },
@@ -745,6 +742,7 @@ export default {
     listmap() {
       this.insurance = JSON.parse(this.$route.query.insurance)
       console.log(this.insurance)
+      this.insurance.firstRegisterDate = formatDate(this.insurance.firstRegisterDate)
       this.source.push(this.insurance.source)
       this.list = this.insurance.listMap
       /* function minOrMaxsInArray(array, length, compare) {
@@ -815,7 +813,13 @@ export default {
             this.MA = true
           }
         } else if (num == num2) {
-          this.B.insuredAmount = arr[i].amount
+          console.log(parseInt(arr[i].amount))
+          console.log(arr[i].amount)
+          if (arr[i].amount.length < 4) {
+            this.B.insuredAmount = arr[i].amount + '0000'
+          } else {
+            this.B.insuredAmount = parseInt(arr[i].amount) + ''
+          }
           if (arr[i].bujimianpei != '' && arr[i].bujimianpei != null) {
             this.MB = true
           }
@@ -825,12 +829,20 @@ export default {
             this.MG1 = true
           }
         } else if (num == num4) {
-          this.D3.insuredAmount = arr[i].amount
+          if (arr[i].amount.length < 4) {
+            this.D3.insuredAmount = arr[i].amount + '0000'
+          } else {
+            this.D3.insuredAmount = parseInt(arr[i].amount) + ''
+          }
           if (arr[i].bujimianpei != '' && arr[i].bujimianpei != null) {
             this.MD3 = true
           }
         } else if (num == num5) {
-          this.D4.insuredAmount = arr[i].amount
+          if (arr[i].amount.length < 4) {
+            this.D4.insuredAmount = arr[i].amount + '0000'
+          } else {
+            this.D4.insuredAmount = parseInt(arr[i].amount) + ''
+          }
           if (arr[i].bujimianpei != '' && arr[i].bujimianpei != null) {
             this.MD4 = true
           }
@@ -842,16 +854,20 @@ export default {
             this.MZ = true
           }
         } else if (num == num8) {
-          this.F.insuredAmount = arr[i].amount
+          this.F.insuredAmount = parseInt(arr[i].amount) + ''
         } else if (num == num9) {
-          this.L.insuredAmount = arr[i].amount
+          if (arr[i].amount.length < 4) {
+            this.L.insuredAmount = arr[i].amount + '0000'
+          } else {
+            this.L.insuredAmount = parseInt(arr[i].amount) + ''
+          }
           if (arr[i].bujimianpei != '' && arr[i].bujimianpei != null) {
             this.ML = true
           }
         } else if (num == num10) {
           this.X1.insuredAmount = 'Y'
           if (arr[i].bujimianpei != '' && arr[i].bujimianpei != null) {
-            this.X1.insuredAmount='Y'
+            this.X1.insuredAmount = 'Y'
             this.MX1 = true
           }
         } else if (num == num11) {
@@ -860,7 +876,7 @@ export default {
             this.MR = true
           }
         } else if (num == num12) {
-          this.Z2.insuredAmount ='Y'
+          this.Z2.insuredAmount = 'Y'
         } else if (num == num13) {
           this.Z3.insuredAmount = 'Y'
         }
@@ -949,13 +965,13 @@ export default {
       }
     },
     getQuoteInfoAllParams() {
-      if (this.source=='') {
+      if (this.source == '') {
         this.$alert('请选择报价公司', '提示', {
           confirmButtonText: '确定'
         })
         return false
       }
-      if ( this.insurance.mobile==null || this.insurance.mobile.length<11  ) {
+      if (this.insurance.mobile == null || this.insurance.mobile.length < 11) {
         this.$alert('请输入正确的车主电话', '提示', {
           confirmButtonText: '确定'
         })
@@ -1087,7 +1103,7 @@ export default {
         carNo: this.insurance.carNo,
         carFrameNo: this.insurance.frameNo,
         carEngineNo: this.insurance.engineNo,
-        salesPerson: user.accountId,
+        salesPerson: '杨杰',
         carFirstRegisterDate: this.insurance.firstRegisterDate,
         createdBy: user.accountId,
         lists: JSON.stringify(this.list)

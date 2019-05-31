@@ -5,7 +5,13 @@
         <el-col span="8" style="padding-right:1em;border-right: #8c939d 1px solid">
           <div style="width: 80%;text-align: center">
             <h2>微信扫描下方二维码</h2>
-            <img src="../../assets/img/ewm.png" style="margin-top: 1em;padding-bottom: 1em">
+            <qrcode
+              :url="url"
+              wid="200"
+              hei="200"
+              imgwid="50"
+              imghei="50"
+            />
           </div>
           <p class="text">您也可以复制该链接直接发送到业务员得微信</p>
           <p class="text" style="color: blue">https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&rsv_idx=1&tn=bai</p>
@@ -25,13 +31,21 @@
 </template>
 
 <script>
+  import qrcode from 'vue_qrcodes'
 export default {
   name: '',
   components: {
+    qrcode
   },
   data() {
     return {
+      url: 'https://www.baozhishun.com/reg?invitecode=',
     }
+  },
+  created() {
+    const user = JSON.parse(this.$store.getters.user)
+    console.log(user)
+    this.url=this.url+user.invitecode
   }
 }
 </script>

@@ -48,7 +48,7 @@
             {{ TPYmsg }}
           </a>
           <br>
-          <a style="font-size: 12px">
+          <a style="font-size: 12px"  class="text-one">
             {{ TPYcause }}
           </a>
         </el-col>
@@ -72,7 +72,7 @@
             {{ RBmsg }}
           </a>
           <br>
-          <a style="font-size: 12px">
+          <a style="font-size: 12px" class="text-one">
             {{ RBcause }}
           </a>
         </el-col>
@@ -96,7 +96,7 @@
             {{ PAmsg }}
           </a>
           <br>
-          <a style="font-size: 12px">
+          <a style="font-size: 12px" class="text-one">
             {{ PAcause }}
           </a>
         </el-col>
@@ -160,18 +160,14 @@ export default {
       source: []
     }
   },
-  watch: {
-    $route(to, from) {
-      if (to.path == '/submitQuote') {
-        this.getQuoteForTPY()
-      }
-    }
-  },
+  // watch: {
+  //   $route(to, from) {
+  //     if (to.path == '/submitQuote') {
+  //       this.getQuoteForTPY()
+  //     }
+  //   }
+  // },
   created() {
-    const a = '5,646.72'
-    const b = '360.00'
-    const c = '950.00'
-    console.log()
     this.insurance = JSON.parse(this.$route.query.param)
     this.insurance.vehicleFgwCode = this.$route.query.vehicleFgwCode
     this.quoteSource(this.$route.query.source)
@@ -204,7 +200,9 @@ export default {
             res.data.data.biPremiumByDis = res.data.data.biPremiumByDis.replace(',', '')
             res.data.data.biPremiumByDis = parseFloat(res.data.data.biPremiumByDis)
           }
-          this.TPYmsg = parseFloat(res.data.data.carshipTax) + parseFloat(res.data.data.ciPremium) + res.data.data.biPremiumByDis
+          this.TPYmsg = (Number((res.data.data.carshipTax).replace(',', '')) + Number((res.data.data.ciPremium).replace(',', '')) + Number(res.data.data.biPremiumByDis)).toFixed(2)
+          console.log(Number(res.data.data.carshipTax))
+          console.log(Number(res.data.data.ciPremium))
           this.TPYmsg = this.TPYmsg + '元'
           this.TPYcause = ''
           this.TPYVerify = '报价成功，核保成功'
@@ -327,4 +325,14 @@ export default {
         line-height: 40px;
         margin-left: 30px;
     }
+  .text-one{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /*设置成弹性盒子 */
+    display: -webkit-box;
+    /*显示的个数 */
+    -webkit-line-clamp: 2;
+    /* 属性规定框的子元素应该被水平或垂直排列。 */
+    -webkit-box-orient: vertical;
+  }
 </style>
