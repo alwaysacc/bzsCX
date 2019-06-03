@@ -120,12 +120,13 @@
           label="上级业务员"
         />
         <el-table-column
-          prop="address"
+          prop="superiorInviteCode"
           label="上级邀请码"
         />
         <el-table-column
           prop="CREATED_TIME"
           label="注册时间"
+          :formatter="formatter_date"
         />
         <el-table-column
           prop="delete_status"
@@ -181,6 +182,7 @@
 
 <script>
 import { addAccount, getUserList, update } from '../../api/organApi'
+import { formatTime } from '../../utils/similar'
 export default {
   name: '',
   components: {
@@ -282,11 +284,17 @@ export default {
       console.log(row)
       if (row.account_state == '0') {
         return '可用'
-      } else if(row.account_state == '1'){
+      } else if (row.account_state == '1') {
         return '不可用'
-      }else{
+      } else {
         return '待审核'
       }
+    },
+    formatter_date(row, column, cellValue, index) {
+      return formatTime(row.CREATED_TIME)
+      // console.log(column)
+      // console.log(cellValue)
+      // console.log(index)
     }
   }
 }

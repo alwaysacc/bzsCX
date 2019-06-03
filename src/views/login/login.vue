@@ -96,6 +96,7 @@ export default {
               setTimeout(() => {
                 setTimeout(() => {
                   this.$store.dispatch('user/setUser', JSON.stringify(res.data.user))
+                  this.$store.dispatch('GenerateRoutes', [])
                   this.$store.dispatch('user/login', this.ruleForm).then(() => {
                     this.$router.push({ path: this.redirect || '/user' })
                     this.logining = false

@@ -14,7 +14,7 @@
             />
           </div>
           <p class="text">您也可以复制该链接直接发送到业务员得微信</p>
-          <p class="text" style="color: blue">https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&rsv_idx=1&tn=bai</p>
+          <p class="text" style="color: blue">{{ url }}</p>
           <p class="text" style="color: red">注意：请务必让业务员收藏该链接，以便下次能找到</p>
         </el-col>
         <el-col span="16" style="padding-left: 2em">
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  import qrcode from 'vue_qrcodes'
+import qrcode from 'vue_qrcodes'
 export default {
   name: '',
   components: {
@@ -39,13 +39,14 @@ export default {
   },
   data() {
     return {
-      url: 'https://www.baozhishun.com/reg?invitecode=',
+      url: 'https://www.baozhishun.com/reg?invitecode='
     }
   },
   created() {
     const user = JSON.parse(this.$store.getters.user)
     console.log(user)
-    this.url=this.url+user.invitecode
+    this.url = this.url + user.invitecode + '&accountId=' + user.accountId
+    console.log(this.url)
   }
 }
 </script>

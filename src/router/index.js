@@ -210,24 +210,24 @@ export const constantRoutes = [
         path: 'oneEntry',
         name: '单个录入',
         component: () => import('@/views/account/oneEntry'),
-        meta: { title: '单个录入' }
+        meta: { title: '单个录入', role: ['admin'] }
       },
       {
-        path: 'oneEntry',
+        path: 'batchCapture',
         name: '批量抓单',
-        component: () => import('@/views/account/oneEntry'),
+        component: () => import('@/views/account/batchCapture'),
         meta: { title: '批量抓单' }
       },
       {
-        path: 'oneEntry',
+        path: 'accountList',
         name: '台账列表',
-        component: () => import('@/views/account/oneEntry'),
+        component: () => import('@/views/account/accountList'),
         meta: { title: '台账列表' }
       },
       {
-        path: 'oneEntry',
+        path: 'correctionCarNo',
         name: '批改车牌',
-        component: () => import('@/views/account/oneEntry'),
+        component: () => import('@/views/account/correctionCarNo'),
         meta: { title: '批改车牌' }
       }
     ]
