@@ -94,16 +94,14 @@ export default {
             console.log(res)
             if (res.code == 200) {
               setTimeout(() => {
-                setTimeout(() => {
-                  this.$store.dispatch('user/setUser', JSON.stringify(res.data.user))
-                  this.$store.dispatch('GenerateRoutes', [])
-                  this.$store.dispatch('user/login', this.ruleForm).then(() => {
-                    this.$router.push({ path: this.redirect || '/user' })
-                    this.logining = false
-                  }).catch(() => {
-                    this.logining = false
-                  })
-                }, 1000)
+                this.$store.dispatch('user/setUser', JSON.stringify(res.data))
+                this.$store.dispatch('GenerateRoutes', [])
+                this.$store.dispatch('user/login', this.ruleForm).then(() => {
+                  this.$router.push({ path: this.redirect || '/user' })
+                  this.logining = false
+                }).catch(() => {
+                  this.logining = false
+                })
                 this.$message({
                   type: 'success',
                   message: '登录成功'

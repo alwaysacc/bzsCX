@@ -33,17 +33,6 @@ const actions = {
   login({ commit }, userInfo) {
     commit('SET_TOKEN', 'admin-token')
     setToken('admin-token')
-    /* const { username, password } = userInfo
-    return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        console.log(response)
-
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
-    })*/
   },
 
   // get user info
